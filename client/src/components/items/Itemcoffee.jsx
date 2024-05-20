@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Delete from "../items/Delete";
 import axios from "axios";
-function Itemcoffee() {
+function Itemcoffee({dataCoffee}) {
 
   return (
     <>
