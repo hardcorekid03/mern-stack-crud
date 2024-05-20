@@ -1,0 +1,57 @@
+.main-container {
+    display: flex;
+  }
+  
+  .left-content {
+    width: 70%;
+    padding: 20px;
+  }
+  .right-content {
+    position: absolute;
+    right: 10px;
+    padding: 20px;
+  }
+  
+  .card-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  .card-title{
+    font-weight: 800;
+    color:peru;
+  }
+  
+  .right-content {
+    width: 30%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .card-text, .card-title, .form-label  {
+    text-align: left;
+  }
+  
+  .card .card-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  .form-control{
+    border-radius: 0%;
+    border: none;
+    border-bottom: .05px solid rgb(201, 201, 201);
+  }
+  textarea:focus, input:focus{
+    outline: none;
+    border: none;
+}
+.form-label{
+  text-align: left;
+
+}
