@@ -19,7 +19,6 @@ function Addform({ setReload }) {
       [name]: value,
     }));
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -40,7 +39,7 @@ function Addform({ setReload }) {
           console.log(err) +
           toast.error("Form submission failed. Please try again.")
       );
-      setReload(true);
+    setReload(true);
   };
 
   return (
@@ -87,7 +86,7 @@ function Addform({ setReload }) {
             onChange={handleChange}
             required
           >
-            <option >---</option>
+            <option>---</option>
             <option>Hot</option>
             <option>Cold</option>
           </select>

@@ -2,10 +2,19 @@ import React from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-function Itemcoffee({ dataCoffee }, { handleDelete }) {
+function Itemcoffee({ dataCoffee, setReload }) {
+  const handleDelete = async (itemId) => {
+    try {
+      // Send a delete request to the backend API
+      await axios.delete(`/api/coffee/${itemId}`);
+      toast.success("Item deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+    setReload(true);
+  };
   return (
-    <>
+    <div>
       <ToastContainer />
       {dataCoffee ? (
         <div className="loading">
@@ -40,7 +49,7 @@ function Itemcoffee({ dataCoffee }, { handleDelete }) {
       ) : (
         <p>Loading...</p>
       )}
-    </>
+    </div>
   );
 }
 
