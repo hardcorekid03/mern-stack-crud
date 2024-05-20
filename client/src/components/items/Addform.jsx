@@ -86,7 +86,7 @@ function Addform() {
             onChange={handleChange}
             required
           >
-            <option >---</option>
+            <option selected>---</option>
             <option>Hot</option>
             <option>Cold</option>
           </select>
