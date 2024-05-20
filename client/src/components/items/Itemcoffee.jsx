@@ -3,15 +3,10 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
-function Itemcoffee({ dataCoffee },{setReload},{handleDelete}) {
-
-
-
-
+function Itemcoffee({ dataCoffee }, { handleDelete }) {
   return (
     <>
-          <ToastContainer />
+      <ToastContainer />
       {dataCoffee ? (
         <div className="loading">
           {dataCoffee.map((coffees) => (
@@ -21,7 +16,10 @@ function Itemcoffee({ dataCoffee },{setReload},{handleDelete}) {
               <p> Serving: {coffees.temp}</p>
               <p>Price: Php {coffees.price}.00</p>
               <p>{coffees.createdAt}.00</p>
-              <button className="btn card-button" onClick={() => handleDelete(coffees._id)}>
+              <button
+                className="btn card-button"
+                onClick={() => handleDelete(coffees._id)}
+              >
                 <svg
                   viewBox="0 0 15 17.5"
                   height="17.5"
