@@ -3,7 +3,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function Addform() {
+function Addform({ setReload }) {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -40,6 +40,7 @@ function Addform() {
           console.log(err) +
           toast.error("Form submission failed. Please try again.")
       );
+      setReload(true);
   };
 
   return (
@@ -86,7 +87,7 @@ function Addform() {
             onChange={handleChange}
             required
           >
-            <option selected>---</option>
+            <option >---</option>
             <option>Hot</option>
             <option>Cold</option>
           </select>

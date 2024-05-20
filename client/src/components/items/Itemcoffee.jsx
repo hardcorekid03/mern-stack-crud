@@ -1,22 +1,7 @@
 import React from "react";
-import { useEffect, useState } from "react";
 import Delete from "../items/Delete";
-import axios from "axios";
-function Itemcoffee() {
-  const [dataCoffee, setDataCoffee] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/api/coffee/");
-        setDataCoffee(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
 
-    fetchData();
-  }, []);
-  
+function Itemcoffee({dataCoffee}) {
   return (
     <>
       {dataCoffee ? (
