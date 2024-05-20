@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Alert, Button } from "react-bootstrap";
 
 function Addform({ setReload }) {
+  const [showAlert, setShowAlert] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -32,19 +33,21 @@ function Addform({ setReload }) {
           temp: "",
           price: "",
         });
-        toast.success("Item added successfully!");
+
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3000);
       })
-      .catch(
-        (err) =>
-          console.log(err) +
-          toast.error("Form submission failed. Please try again.")
-      );
+      .catch((err) => console.log(err) + alert("Error adding item!" + err));
     setReload(true);
   };
 
   return (
     <div className="card shadow p-4">
-      <ToastContainer />
+      <Alert className="card" show={showAlert} variant="success" >
+        Item added successfully!
+      </Alert>
       <form onSubmit={handleSubmit}>
         <div className="mb-2">
           <label htmlFor="coffeeName" className="form-label">

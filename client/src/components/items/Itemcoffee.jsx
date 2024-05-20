@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import "../items/Delete.css";
+import { Alert, Button } from "react-bootstrap";
+
 function Itemcoffee({ dataCoffee, setReload }) {
+  const [showAlert, setShowAlert] = useState(false);
+
   const handleDelete = async (itemId) => {
     try {
       // Send a delete request to the backend API
       await axios.delete(`/api/coffee/${itemId}`);
-      toast.success("Item deleted successfully!");
+
+      // Show the alert
+      setShowAlert(true);
+
+      // Automatically close the alert after 3 seconds
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
     } catch (error) {
       console.error("Error deleting item:", error);
     }
@@ -15,9 +25,13 @@ function Itemcoffee({ dataCoffee, setReload }) {
   };
   return (
     <div>
-      <ToastContainer />
       {dataCoffee ? (
         <div className="loading">
+          <div >
+            <Alert className="card" show={showAlert} key= "danger" variant="danger">
+              Item deleted successfully!
+            </Alert>
+          </div>
           {dataCoffee.map((coffees) => (
             <div className="card shadow-sm" key={coffees._id}>
               <h3 className="card-title"> {coffees.name}</h3>
@@ -25,24 +39,35 @@ function Itemcoffee({ dataCoffee, setReload }) {
               <p> Serving: {coffees.temp}</p>
               <p>Price: Php {coffees.price}.00</p>
               <p>{coffees.createdAt}.00</p>
-              <button
-                className="btn card-button"
-                onClick={() => handleDelete(coffees._id)}
-              >
-                <svg
-                  viewBox="0 0 15 17.5"
-                  height="17.5"
-                  width="15"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="icon"
+              <div className="card-button-group">
+                <button className="btn card-button btn-outline-secondary">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-pencil"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+                  </svg>
+                </button>
+                <button
+                  className="btn card-button btn-outline-danger"
+                  onClick={() => handleDelete(coffees._id)}
                 >
-                  <path
-                    transform="translate(-2.5 -1.25)"
-                    d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z"
-                    id="Fill"
-                  ></path>
-                </svg>
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-x-lg"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                  </svg>
+                </button>
+              </div>
             </div>
           ))}
         </div>
