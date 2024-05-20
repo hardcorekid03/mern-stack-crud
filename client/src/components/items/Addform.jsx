@@ -30,14 +30,14 @@ function Addform({ setReload }) {
         setFormData({
           name: "",
           description: "",
-          temp: "",
+          temp: "---",
           price: "",
         });
 
         setShowAlert(true);
         setTimeout(() => {
           setShowAlert(false);
-        }, 3000);
+        }, 2000);
       })
       .catch((err) => console.log(err) + alert("Error adding item!" + err));
     setReload(true);
@@ -45,7 +45,7 @@ function Addform({ setReload }) {
 
   return (
     <div className="card shadow p-4">
-      <Alert className="card" show={showAlert} variant="success" >
+      <Alert className="card" show={showAlert} variant="success">
         Item added successfully!
       </Alert>
       <form onSubmit={handleSubmit}>
@@ -110,7 +110,7 @@ function Addform({ setReload }) {
         </div>
 
         <button type="submit" className="btn btn-primary">
-          Submit
+          Add item
         </button>
       </form>
     </div>
