@@ -1,7 +1,7 @@
 import React from "react";
 import "./Delete.css";
 function Delete() {
-
+  
   return (
     <button className="btn card-button">
       <svg

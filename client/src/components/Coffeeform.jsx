@@ -22,17 +22,31 @@ function Coffeeform() {
         console.error("Error fetching data:", error);
       }
     }; 
-// fetch data from database
-
     setReload(false);
     fetchData();
   }, [reload]);
-  
+  // end of fetch data from database
+
+  // delete item
+  const handleDelete = async (itemId) => {
+    try {
+      // Send a delete request to the backend API
+      await axios.delete(`/api/coffee/${itemId}`);
+      toast.success("Item deleted successfully!");
+      
+    } 
+    catch (error) {
+      console.error('Error deleting item:', error);
+    }
+    };
+// end of delete item
+
+
   return (
     <div className="main-container">
       <div className="left-content">
         <div className="card-container">
-          <Itemcoffee dataCoffee={dataCoffee} />
+          <Itemcoffee dataCoffee={dataCoffee} setReload={setReload} handleDelete={handleDelete}/>
         </div>
       </div>
       <div className="right-content">
