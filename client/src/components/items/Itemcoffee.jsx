@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../items/Delete.css";
-import { Alert, Button } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 function Itemcoffee({ dataCoffee, setReload }) {
@@ -32,6 +32,9 @@ function Itemcoffee({ dataCoffee, setReload }) {
     if (event.key === "Enter") {
       handleSave();
     }
+    if (event.key === "Escape") {
+      handleCancelEdit();
+    }
   };
 
   const handleInputChange = (e) => {
@@ -55,8 +58,23 @@ function Itemcoffee({ dataCoffee, setReload }) {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setEditedData((prevData) => ({
+        ...prevData,
+        image: reader.result,
+      }));
+    };
+
+    reader.readAsDataURL(file);
+  };
+
   return (
-    <div>
+    <div onKeyUp={handleKeyPress}
+    >
       {dataCoffee ? (
         <div className="loading">
           <div className="alerts">
@@ -72,9 +90,9 @@ function Itemcoffee({ dataCoffee, setReload }) {
             <Alert
               className="card"
               show={showEditAlert}
-              key="danger"
+              key="info"
               variant="info"
-              height="20px"
+              height="10px"
             >
               Item updated successfully!
             </Alert>
@@ -83,7 +101,7 @@ function Itemcoffee({ dataCoffee, setReload }) {
             <div
               className="card shadow-sm"
               key={coffees._id}
-              onKeyPress={handleKeyPress}
+              onKeyUp={handleKeyPress}
             >
               <h3 className="card-title">
                 {editedData._id === coffees._id ? (
@@ -140,6 +158,34 @@ function Itemcoffee({ dataCoffee, setReload }) {
                   coffees.price
                 )}
               </p>
+              {editedData._id === coffees._id ? (
+                <div>
+                  <input
+                    type="file"
+                    accept=".jpeg, .jpg, .png"
+                    onChange={handleImageChange}
+                  />
+                  {editedData.image && (
+                    <img
+                    className="card-image"
+                      src={editedData.image}
+                      alt={editedData.name}
+                      style={{ maxWidth: "420px", height: "180px" }}
+                    />
+                  )}
+                </div>
+              ) : (
+                coffees.image && (
+                  <div>
+                    <img
+                    className="card-image"
+                      src={coffees.image}
+                      alt={coffees.name}
+                      style={{ maxWidth: "420px", height: "180px" }}
+                    />
+                    </div>
+                )
+              )}
               <p>
                 {formatDistanceToNow(new Date(coffees.createdAt), {
                   addSuffix: true,
@@ -157,14 +203,15 @@ function Itemcoffee({ dataCoffee, setReload }) {
                         width="16"
                         height="16"
                         fill="currentColor"
-                        class="bi bi-check2"
+                        className="bi bi-check2"
                         viewBox="0 0 16 16"
                       >
                         <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0" />
                       </svg>
                     </button>
+
                     <button
-                      className="btn card-button btn-outline-secondary"
+                      className="btn card-button btn-outline-danger"
                       onClick={handleCancelEdit}
                     >
                       <svg
@@ -182,7 +229,7 @@ function Itemcoffee({ dataCoffee, setReload }) {
                 ) : (
                   <div>
                     <button
-                      className="btn card-button btn-outline-primary"
+                      className="btn card-button btn-outline-secondary"
                       onClick={() => handleEdit(coffees)}
                     >
                       <svg
@@ -205,7 +252,7 @@ function Itemcoffee({ dataCoffee, setReload }) {
                         width="16"
                         height="16"
                         fill="currentColor"
-                        class="bi bi-trash"
+                        className="bi bi-trash"
                         viewBox="0 0 16 16"
                       >
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
@@ -219,7 +266,7 @@ function Itemcoffee({ dataCoffee, setReload }) {
           ))}
         </div>
       ) : (
-        <p>Loading...</p>
+        <p>No record available...</p>
       )}
     </div>
   );

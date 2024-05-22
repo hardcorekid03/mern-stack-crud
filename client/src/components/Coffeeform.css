@@ -21,6 +21,13 @@
     margin-bottom: 20px;
     text-align: left;
   }
+  .card-image {
+    text-align: left;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    border-radius: 2%;
+  }
   .card-title{
     font-weight: 800;
     color:peru;
@@ -54,6 +61,7 @@
 .inline-input{
   outline: none;
   border: none;
+
 
 }
 .form-label{

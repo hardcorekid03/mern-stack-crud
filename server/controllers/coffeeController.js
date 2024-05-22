@@ -19,12 +19,13 @@ const getCoffee = async (req, res) => {
   }
   res.status(200).json(coffee);
 };
+
 // create new coffee
 const createCoffee = async (req, res) => {
-  const { name, description, temp, price } = req.body;
+  const { image, name, description, temp, price,  } = req.body;
   // add to database
   try {
-    const coffee = await Coffee.create({ name, description, temp, price });
+    const coffee = await Coffee.create({ image, name, description, temp, price });
     res.status(200).json(coffee);
   } catch (error) {
     res.status(400).json({ error: error.message });

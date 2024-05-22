@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require('cors');
 const mongoose = require("mongoose");
+const bodyParser = require('body-parser');
+
 const CoffeeMenu = require("./routes/CoffeeMenu");
 
 // express app
@@ -11,6 +13,8 @@ const app = express();
 app.use(cors());
 
 // middleware
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(express.json());
 app.use((req, res, next) => {
   console.log(req.path, req.method);

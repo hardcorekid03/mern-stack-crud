@@ -6,11 +6,28 @@ function Addform({ setReload }) {
   const [showAlert, setShowAlert] = useState(false);
 
   const [formData, setFormData] = useState({
+    image: "",
     name: "",
     description: "",
-    temp: "",
+    temp: "---",
     price: "",
   });
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    
+    reader.onloadend = () => {
+      setFormData((prevState) => ({
+        ...prevState,
+        image: reader.result,
+      }));
+    };
+    
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,6 +37,7 @@ function Addform({ setReload }) {
       [name]: value,
     }));
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -28,11 +46,13 @@ function Addform({ setReload }) {
       .then((res) => {
         console.log(res.data);
         setFormData({
+          image: "",
           name: "",
           description: "",
           temp: "---",
           price: "",
         });
+        setReload(true);
 
         setShowAlert(true);
         setTimeout(() => {
@@ -40,11 +60,9 @@ function Addform({ setReload }) {
         }, 2000);
       })
       .catch((err) => console.log(err) + alert("Error adding item!" + err));
-    setReload(true);
   };
 
   return (
-    
     <div className="card shadow p-4">
       <Alert className="card" show={showAlert} variant="success">
         Item added successfully!
@@ -106,6 +124,20 @@ function Addform({ setReload }) {
             id="price"
             value={formData.price}
             onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-2">
+          <label htmlFor="image" className="form-label">
+            Image
+          </label>
+          <input
+            name="image"
+            className="form-control"
+            id="image"
+            type="file" 
+            accept=".jpeg, .jpg, .png"
+            onChange={handleImageChange}
             required
           />
         </div>
