@@ -18,6 +18,11 @@ app.use(cors(
    }
 
 ));
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+  // You can also set other CORS headers here if needed
+  next();
+});
 
 // middleware
 app.use(bodyParser.json({ limit: '10mb' }));
