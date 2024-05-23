@@ -8,10 +8,31 @@ function Itemcoffee({ dataCoffee, setReload }) {
   const [showAlert, setShowAlert] = useState(false);
   const [showEditAlert, setEditShowAlert] = useState(false);
 
-  const [editedData, setEditedData] = useState({});
+  const [editedData, setEditedData] = useState({}); // kapag i-eedit yong mga label sa cards
 
   const handleEdit = (coffees) => {
     setEditedData({ ...coffees });
+  };
+
+  const handleInputChange = (e) => {
+    setEditedData({ ...editedData, [e.target.name]: e.target.value });
+  };
+
+  const handleCancelEdit = () => {
+    setEditedData({});
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setEditedData((prevData) => ({
+        ...prevData,
+        image: reader.result,
+      }));
+    };
+
+    reader.readAsDataURL(file);
   };
 
   const handleSave = async () => {
@@ -28,23 +49,6 @@ function Itemcoffee({ dataCoffee, setReload }) {
     }
   };
 
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      handleSave();
-    }
-    if (event.key === "Escape") {
-      handleCancelEdit();
-    }
-  };
-
-  const handleInputChange = (e) => {
-    setEditedData({ ...editedData, [e.target.name]: e.target.value });
-  };
-
-  const handleCancelEdit = () => {
-    setEditedData({});
-  };
-
   const handleDelete = async (itemId) => {
     try {
       await axios.delete(`/api/coffee/${itemId}`);
@@ -58,23 +62,17 @@ function Itemcoffee({ dataCoffee, setReload }) {
     }
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      setEditedData((prevData) => ({
-        ...prevData,
-        image: reader.result,
-      }));
-    };
-
-    reader.readAsDataURL(file);
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSave();
+    }
+    if (event.key === "Escape") {
+      handleCancelEdit();
+    }
   };
 
   return (
-    <div onKeyUp={handleKeyPress}
-    >
+    <div onKeyUp={handleKeyPress}>
       {dataCoffee ? (
         <div className="loading">
           <div className="alerts">
@@ -119,8 +117,9 @@ function Itemcoffee({ dataCoffee, setReload }) {
               <p>
                 Description:{" "}
                 {editedData._id === coffees._id ? (
-                  <input
-                    className="inline-input"
+                  <textarea
+                    rows="2"
+                    className="form-control inline-input"
                     type="text"
                     name="description"
                     value={editedData.description}
@@ -167,10 +166,10 @@ function Itemcoffee({ dataCoffee, setReload }) {
                   />
                   {editedData.image && (
                     <img
-                    className="card-image"
+                      className="card-image"
                       src={editedData.image}
                       alt={editedData.name}
-                      style={{ maxWidth: "420px", height: "180px" }}
+                      style={{ maxWidth: "375px", height: "180px" }}
                     />
                   )}
                 </div>
@@ -178,16 +177,25 @@ function Itemcoffee({ dataCoffee, setReload }) {
                 coffees.image && (
                   <div>
                     <img
-                    className="card-image"
+                      className="card-image"
                       src={coffees.image}
                       alt={coffees.name}
-                      style={{ maxWidth: "420px", height: "180px" }}
+                      style={{ maxWidth: "375px", height: "180px" }}
                     />
-                    </div>
+                  </div>
                 )
               )}
               <p>
+                {" "}
+                Created:{" "}
                 {formatDistanceToNow(new Date(coffees.createdAt), {
+                  addSuffix: true,
+                })}
+              </p>
+              <p>
+                {" "}
+                Updated:{" "}
+                {formatDistanceToNow(new Date(coffees.updatedAt), {
                   addSuffix: true,
                 })}
               </p>

@@ -86,7 +86,8 @@ function Addform({ setReload }) {
           <label htmlFor="description" className="form-label">
             Description
           </label>
-          <input
+          <textarea
+            rows= "2"
             className="form-control"
             id="description"
             name="description"

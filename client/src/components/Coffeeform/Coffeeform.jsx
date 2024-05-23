@@ -1,11 +1,10 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../components/Coffeeform.css";
+import "./Coffeeform.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Addform from "./items/Addform";
-import Itemcoffee from "./items/Itemcoffee";
-
+import Addform from "../items/Addform";
+import Itemcoffee from "../items/Itemcoffee";
 
 function Coffeeform() {
   const [dataCoffee, setDataCoffee] = useState(null);
@@ -30,10 +29,12 @@ function Coffeeform() {
   return (
     <div className="main-container">
       <div className="left-content">
+
         <div className="card-container">
           <Itemcoffee dataCoffee={dataCoffee} setReload={setReload} />
         </div>
       </div>
+
       <div className="right-content">
         <Addform setReload={setReload} />
       </div>
