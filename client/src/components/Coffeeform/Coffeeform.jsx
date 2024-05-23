@@ -14,7 +14,7 @@ function Coffeeform() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/coffee/");
+        const response = await axios.get("https://mern-stack-crud-five.vercel.app/api/coffee/");
         setDataCoffee(response.data);
         if (reload) setReload(false);
       } catch (error) {

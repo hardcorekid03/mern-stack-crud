@@ -10,7 +10,14 @@ const CoffeeMenu = require("./routes/CoffeeMenu");
 const app = express();
 
 // Enable CORS for all origins
-app.use(cors());
+app.use(cors(
+  {
+   origin:["http://localhost:5173"],
+   methods: ["POST", "GET"],
+   credentials: true
+   }
+
+));
 
 // middleware
 app.use(bodyParser.json({ limit: '10mb' }));

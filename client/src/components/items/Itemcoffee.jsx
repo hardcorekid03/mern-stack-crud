@@ -75,7 +75,7 @@ function Itemcoffee({ dataCoffee, setReload }) {
     <div onKeyUp={handleKeyPress}>
       {dataCoffee ? (
         <div className="loading">
-          <div className="alerts">
+          <div className="alerts"> 
             <Alert
               className="card"
               show={showAlert}
