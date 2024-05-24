@@ -10,19 +10,9 @@ const CoffeeMenu = require("./routes/CoffeeMenu");
 const app = express();
 
 // Enable CORS for all origins
-app.use(cors(
-  {
-   origin:["http://localhost:5173"],
-   methods: ["POST", "GET"],
-   credentials: true
-   }
-
-));
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-  // You can also set other CORS headers here if needed
-  next();
-});
+app.use(cors({
+  origin: ['https://bestdaycafe.netlify.app', 'http://localhost:5173'],
+}));
 
 // middleware
 app.use(bodyParser.json({ limit: '10mb' }));
@@ -37,12 +27,13 @@ app.use((req, res, next) => {
 app.use("/api/coffee", CoffeeMenu);
 
 //connect to db
+const dbPort = process.env.PORT || 4000;
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     // listen for request
-    app.listen(process.env.PORT, () => {
-      console.log("connected to database and listening on port 4000");
+    app.listen(dbPort, () => {
+      console.log("connected to database and listening on port", dbPort);
     });
   })
   .catch((error) => {
