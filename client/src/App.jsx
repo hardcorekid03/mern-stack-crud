@@ -2,14 +2,16 @@ import { useState } from 'react'
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
-import Coffeeform from './components/Coffeeform/Coffeeform'
-import Login from './components/Login/Login';
+import { BrowserRouter as Router } from "react-router-dom";
+import AppRoutes from "../src/components/Routes"
 
 function App() {
   return (
     <>
+<Router>
+  <AppRoutes/>
+</Router>
 
-     <Login/>
     </>
   )
 }

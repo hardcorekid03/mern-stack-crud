@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 
 const CoffeeMenu = require("./routes/CoffeeMenu");
+const userRoutes = require("./routes/User");
+
 
 // express app
 const app = express();
@@ -25,6 +27,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use("/api/coffee", CoffeeMenu);
+app.use("/api/user", userRoutes);
 
 //connect to db
 const dbPort = process.env.PORT || 4000;

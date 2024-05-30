@@ -1,5 +1,7 @@
 import React from "react";
 import "./Login.css";
+import { Link } from 'react-router-dom';
+
 
 function Login() {
   return (
@@ -25,13 +27,14 @@ function Login() {
               autoComplete=""
             />
             <div className="form-bottom">
-              <button
+              <Link to="/home" style={{ textDecoration: 'none' }}>
+              <button 
                 className="buttonContainer btn btn-lg btn-dark btn-block"
                 type="submit"
               >
                 Login
               </button>
-
+              </Link>
               <label className="checkbox">
                 <input
                   type="checkbox"
