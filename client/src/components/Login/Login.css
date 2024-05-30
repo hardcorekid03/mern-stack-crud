@@ -66,14 +66,21 @@
 .error {
   border-radius: 0%;
   margin-bottom: 10px;
-  text-align: left;
   width: 100%;
   display: flex;
   justify-content: space-evenly;
+  text-align: center;
+  display: flex;
+  align-items: center;
+
+
 }
 .checkbox {
   float: left;
 }
 .signup {
   float: right;
+}
+.error > p {
+  color:crimson;
 }

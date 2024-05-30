@@ -13,10 +13,12 @@ function Login() {
             <input
               type="text"
               className="form-control"
-              name="username"
+              name="email"
               placeholder="Email Address"
               required=""
               autoFocus=""
+              autoComplete="current-email"
+
             />
             <input
               type="password"
@@ -24,7 +26,7 @@ function Login() {
               name="password"
               placeholder="Password"
               required=""
-              autoComplete=""
+              autoComplete="current-password"
             />
             <div className="form-bottom">
               <Link to="/home" style={{ textDecoration: 'none' }}>
