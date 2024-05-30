@@ -3,8 +3,12 @@ const {
     createCoffee, getCoffee, getCoffees, deleteCoffee, updateCoffee
 
 } = require ('../controllers/coffeeController')
+const requireAuth = require ('../middleware/requireAuth')
 
 const router = express.Router()
+
+
+router.use (requireAuth)
 
 // get coffee items
 router.get('/', getCoffees )
