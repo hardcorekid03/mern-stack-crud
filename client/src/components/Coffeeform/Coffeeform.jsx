@@ -22,6 +22,7 @@ function Coffeeform() {
           if (!response.ok) {
             throw new Error("Failed to fetch data");
           }
+          
           setDataCoffee(data);
 
           if (reload) setReload(false);
