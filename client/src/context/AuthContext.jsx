@@ -26,8 +26,7 @@ export const AuthContextProvider = ({children}) => {
             dispatch({ type: 'LOGIN', payload: user }) // check https://www.youtube.com/watch?v=Y8pD1gBL_MY&list=PL4cUxeGkcC9g8OhpOZxNdhXggFz2lOuCT&index=13
         }
 
-    } ,
-    [])
+    } ,[])
 
     console.log('AuthContext state:', state)
 

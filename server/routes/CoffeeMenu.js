@@ -9,7 +9,6 @@ const router = express.Router()
 
 
 router.use (requireAuth)
-
 // get coffee items
 router.get('/', getCoffees )
 

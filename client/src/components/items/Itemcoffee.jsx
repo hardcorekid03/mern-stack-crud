@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import axios from "axios";
 import "../items/Delete.css";
 import { Alert } from "react-bootstrap";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { useAuthContext } from "../../hooks/useAuthContext";
+
 
 function Itemcoffee({ dataCoffee, setReload }) {
+  const {user} = useAuthContext();
   const [showAlert, setShowAlert] = useState(false);
   const [showEditAlert, setEditShowAlert] = useState(false);
 
-  const [editedData, setEditedData] = useState({}); // kapag i-eedit yong mga label sa cards
+  const [editedData, setEditedData] = useState({});
 
   const handleEdit = (coffees) => {
     setEditedData({ ...coffees });
@@ -37,7 +39,20 @@ function Itemcoffee({ dataCoffee, setReload }) {
 
   const handleSave = async () => {
     try {
-      await axios.patch(`/api/coffee/${editedData._id}`, editedData);
+      const response = await fetch(`/api/coffee/${editedData._id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`,
+
+        },
+        body: JSON.stringify(editedData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
       setEditShowAlert(true);
       setTimeout(() => {
         setEditShowAlert(false);
@@ -51,7 +66,19 @@ function Itemcoffee({ dataCoffee, setReload }) {
 
   const handleDelete = async (itemId) => {
     try {
-      await axios.delete(`/api/coffee/${itemId}`);
+      const response = await fetch(`/api/coffee/${itemId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`,
+
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
       setShowAlert(true);
       setTimeout(() => {
         setShowAlert(false);

@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Alert, Button } from "react-bootstrap";
+import { useAuthContext } from "../../hooks/useAuthContext";
+
+
 
 function Addform({ setReload }) {
-  const [showAlert, setShowAlert] = useState(false);
+  const {user} = useAuthContext();
 
+  const [showAlert, setShowAlert] = useState(false);
   const [formData, setFormData] = useState({
     image: "",
     name: "",
@@ -38,28 +42,42 @@ function Addform({ setReload }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    axios
-      .post("/api/coffee/", formData)
-      .then((res) => {
-        console.log(res.data);
-        setFormData({
-          image: "",
-          name: "",
-          description: "",
-          temp: "---",
-          price: "",
-        });
-        setReload(true);
+    try {
+      const response = await fetch("/api/coffee/", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`,
+        },
+        body: JSON.stringify(formData),
+      });
 
-        setShowAlert(true);
-        setTimeout(() => {
-          setShowAlert(false);
-        }, 2000);
-      })
-      .catch((err) => console.log(err) + alert("Error adding item!" + err));
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      } 
+      const data = await response.json();
+      console.log(data);
+
+      setFormData({
+        image: "",
+        name: "",
+        description: "",
+        temp: "---",
+        price: "",
+      });
+
+      setReload(true);
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
+    } catch (error) {
+      console.error('There was an error!', error);
+      alert("Error adding item!");
+    }
   };
 
   return (
