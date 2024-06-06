@@ -6,12 +6,13 @@ function Addform({ setReload }) {
   const {user} = useAuthContext();
 
   const [showAlert, setShowAlert] = useState(false);
+  const [showError, setShowError] = useState(false);
+
   const [formData, setFormData] = useState({
-    image: "",
     name: "",
     description: "",
     temp: "---",
-    price: "",
+    price: ""
   });
 
   const handleImageChange = (e) => {
@@ -59,7 +60,6 @@ function Addform({ setReload }) {
       console.log(data);
 
       setFormData({
-        image: "",
         name: "",
         description: "",
         temp: "---",
@@ -67,22 +67,24 @@ function Addform({ setReload }) {
       });
 
       setReload(true);
+
       setShowAlert(true);
       setTimeout(() => {
         setShowAlert(false);
       }, 2000);
       
     } catch (error) {
-      console.error('There was an error!', error);
-      alert("Error adding item!");
+      // console.error('There was an error!', error);
+      setShowError(true);
+      setTimeout(() => {
+        setShowError(false);
+      }, 2000);
+    
     }
   };
 
   return (
     <div className="card shadow p-4">
-      <Alert className="card" show={showAlert} variant="success">
-        Item added successfully!
-      </Alert>
       <form onSubmit={handleSubmit}>
         <div className="mb-2">
           <label htmlFor="coffeeName" className="form-label">
@@ -97,6 +99,9 @@ function Addform({ setReload }) {
             onChange={handleChange}
             required
           />
+                <div className="invalid-feedback">
+        Please fill up this field!!!!!!!!!!!!!!!!!!!!!!
+      </div>
         </div>
         <div className="mb-2">
           <label htmlFor="description" className="form-label">
@@ -163,6 +168,14 @@ function Addform({ setReload }) {
           Add item
         </button>
       </form>
+      <div className="div-alert">
+      <Alert className="success-alert" show={showAlert} variant="success">
+        Item added successfully!
+      </Alert>
+      <Alert className="error-alert" show={showError} variant="danger">
+        Error adding item!      </Alert>
+      </div>
+
     </div>
   );
 }
