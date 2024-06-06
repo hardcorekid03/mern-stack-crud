@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import "../items/Delete.css";
 import { Alert } from "react-bootstrap";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useAuthContext } from "../../hooks/useAuthContext";
-
 
 function Itemcoffee({ dataCoffee, setReload }) {
   const {user} = useAuthContext();
@@ -88,7 +86,6 @@ function Itemcoffee({ dataCoffee, setReload }) {
       console.error("Error deleting item:", error);
     }
   };
-
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleSave();
@@ -128,6 +125,8 @@ function Itemcoffee({ dataCoffee, setReload }) {
               key={coffees._id}
               onKeyUp={handleKeyPress}
             >
+                    <div className="col-md-10">
+                    <div className="card-body">
               <h3 className="card-title">
                 {editedData._id === coffees._id ? (
                   <input
@@ -141,7 +140,7 @@ function Itemcoffee({ dataCoffee, setReload }) {
                   coffees.name
                 )}
               </h3>
-              <p>
+              <p className="card-text">
                 Description:{" "}
                 {editedData._id === coffees._id ? (
                   <textarea
@@ -185,7 +184,7 @@ function Itemcoffee({ dataCoffee, setReload }) {
                 )}
               </p>
               {editedData._id === coffees._id ? (
-                <div>
+                <div className="col-md-2" >
                   <input
                     type="file"
                     accept=".jpeg, .jpg, .png"
@@ -296,6 +295,8 @@ function Itemcoffee({ dataCoffee, setReload }) {
                     </button>
                   </div>
                 )}
+              </div>
+              </div>
               </div>
             </div>
           ))}

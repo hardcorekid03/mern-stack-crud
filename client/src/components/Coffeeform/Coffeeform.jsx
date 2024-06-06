@@ -52,17 +52,6 @@ function Coffeeform() {
           <Addform setReload={setReload} />
         </div>
       </div>
-      <div className="main-container">
-        <div className="left-content">
-          <div className="card-container">
-            <Itemcoffee dataCoffee={dataCoffee} setReload={setReload} />
-          </div>
-        </div>
-
-        <div className="right-content">
-          <Addform setReload={setReload} />
-        </div>
-      </div>
     </>
   );
 }

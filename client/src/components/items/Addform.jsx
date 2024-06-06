@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { Alert, Button } from "react-bootstrap";
+import { Alert} from "react-bootstrap";
 import { useAuthContext } from "../../hooks/useAuthContext";
-
-
 
 function Addform({ setReload }) {
   const {user} = useAuthContext();
@@ -74,6 +71,7 @@ function Addform({ setReload }) {
       setTimeout(() => {
         setShowAlert(false);
       }, 2000);
+      
     } catch (error) {
       console.error('There was an error!', error);
       alert("Error adding item!");
