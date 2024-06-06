@@ -1,18 +1,13 @@
 import { useState } from 'react'
 import { useAuthContext } from './useAuthContext'
-import { useNavigate } from "react-router-dom";
 
 
 export const useLogin = () => {
-  const {user} = useAuthContext();
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
   const { dispatch } = useAuthContext()
-  const navigate = useNavigate(); // Initialize useNavigate
 
-if (user) {
-  navigate("/home"); 
-}
+
   const login = async (email, password) => {
     setIsLoading(true)
     setError(null)
@@ -39,7 +34,6 @@ if (user) {
       setIsLoading(false)
 	  
 	    // Redirect to home page
-      navigate("/home"); // Assuming "/" is your home page route
     }
   }
 

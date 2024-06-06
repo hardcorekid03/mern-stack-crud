@@ -5,30 +5,28 @@ import Itemcoffee from "../items/Itemcoffee";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
 function Coffeeform() {
-  const {user} = useAuthContext();
+  const { user } = useAuthContext();
   const [dataCoffee, setDataCoffee] = useState(null);
   const [reload, setReload] = useState(false);
-  
+
   // fetch data from database
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/coffee/',
-        {
-          headers: {'Authorization': `Bearer ${user.token}`},
-        })
-          const data = await response.json();
-        
-          if (!response.ok) {
-            throw new Error("Failed to fetch data");
-          }
-          
-          setDataCoffee(data);
+        const response = await fetch("/api/coffee/", {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        const data = await response.json();
 
-          if (reload) setReload(false);
-        
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+
+        setDataCoffee(data);
+
+        if (reload) setReload(false);
       } catch (error) {
-          console.error("Error fetching data:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -40,17 +38,32 @@ function Coffeeform() {
   // end of fetch data from database
 
   return (
-    <div className="main-container">
-      <div className="left-content">
-        <div className="card-container">
-          <Itemcoffee dataCoffee={dataCoffee} setReload={setReload} />
+    <>
+
+      <div className="main-container">
+        
+        <div className="left-content">
+          <div className="card-container">
+            <Itemcoffee dataCoffee={dataCoffee} setReload={setReload} />
+          </div>
+        </div>
+
+        <div className="right-content">
+          <Addform setReload={setReload} />
         </div>
       </div>
+      <div className="main-container">
+        <div className="left-content">
+          <div className="card-container">
+            <Itemcoffee dataCoffee={dataCoffee} setReload={setReload} />
+          </div>
+        </div>
 
-      <div className="right-content">
-        <Addform setReload={setReload} />
+        <div className="right-content">
+          <Addform setReload={setReload} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

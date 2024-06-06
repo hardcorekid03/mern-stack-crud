@@ -1,16 +1,20 @@
-import { Route, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from "../pages/Login/Login"
 import Signup from "../pages/Signup/Signup"
 import Coffeeform from "./Coffeeform/Coffeeform"
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const AppRoutes = () => {
+    const { user } = useAuthContext();
     return (
+      <BrowserRouter>
         <Routes>
-            <Route path ="/" element={<Login/>}/>
-            <Route path ="/signup" element={<Signup/>}/>
-            <Route path ="/home" element={<Coffeeform/>}/>3
-            <Route path ="*" element={<h1>Error 404: Page not found!</h1>}/>
+        <Route path="/" element={ user ? <Coffeeform /> : <Navigate to="/login" />  }/>
+        <Route path="/login" element ={!user ? <Login/> :  <Navigate to="/" /> }/>
+        <Route path="/signup" element ={!user ? <Signup/> :  <Navigate to="/" /> }/>
+        <Route path="*" element={<h1>Error 404: Page not found!</h1>} />
         </Routes>
-    )
-}
-export default AppRoutes;
+      </BrowserRouter>
+    );
+  };
+  export default AppRoutes;
