@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Coffeeform.css";
-import Addform from "../items/Addform";
-import Itemcoffee from "../items/Itemcoffee";
+import Addform from "../Items/Addform";
+import Itemcoffee from "../Items/Itemcoffee";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
 function Coffeeform() {

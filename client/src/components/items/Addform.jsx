@@ -99,9 +99,6 @@ function Addform({ setReload }) {
             onChange={handleChange}
             required
           />
-                <div className="invalid-feedback">
-        Please fill up this field!!!!!!!!!!!!!!!!!!!!!!
-      </div>
         </div>
         <div className="mb-2">
           <label htmlFor="description" className="form-label">

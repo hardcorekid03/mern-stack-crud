@@ -16,8 +16,11 @@ const requireAuth =  async (req, res, next) => {
        res.user = await User.findOne ({ _id }).select('_id')
        next() 
 
-    } catch (error) {
-        console.log (error)
+    } 
+    catch (error) {
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({ error: 'Token expired', redirect: '/'});
+          }
         res.status(401).json ({error: 'Request is not authorized'})
     }
 
