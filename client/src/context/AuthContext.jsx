@@ -1,38 +1,44 @@
 import { createContext, useReducer, useEffect } from "react";
+import { redirect} from 'react-router-dom'; // Assuming you're using react-router-dom
 
-export const AuthContext = createContext ();
+export const AuthContext = createContext();
 
-export const authReducer = ( state, action) => {
-
+export const authReducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN':
-            return {user: action.payload}
+            return { user: action.payload };
         case 'LOGOUT':
-            return {user: null}
+            return { user: null };
         default:
-            return state
+            return state;
     }
-}
+};
 
-export const AuthContextProvider = ({children}) => {
-    const [state, dispatch] = useReducer(authReducer, {
-        user: null
-    })
+export const AuthContextProvider = ({ children }) => {
 
-    useEffect (() => {
-        const user = JSON.parse (localStorage.getItem ('user'))
+    const [state, dispatch] = useReducer(authReducer, { user: null });
 
-        if(user) {
-            dispatch({ type: 'LOGIN', payload: user }) // check https://www.youtube.com/watch?v=Y8pD1gBL_MY&list=PL4cUxeGkcC9g8OhpOZxNdhXggFz2lOuCT&index=13
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'))
+        if (user) {
+            dispatch({ type: 'LOGIN', payload: user })
         }
+    }, [])
 
-    } ,[])
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'))
 
-    console.log('AuthContext state:', state)
+        if (!user) {
+            redirect('/'); // Redirect to login page if user is null
+        }
+    }, [state.user]);
+
+    console.log('AuthContext state:', state);
 
     return (
-        <AuthContext.Provider value={{...state, dispatch}}>
+        <AuthContext.Provider value={{ ...state, dispatch }}>
             {children}
         </AuthContext.Provider>
-    )
-}
+    );
+};
